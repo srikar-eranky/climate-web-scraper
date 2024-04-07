@@ -7,24 +7,24 @@ from concurrent.futures import ThreadPoolExecutor
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager
 
 chrome_driver_dir = './.Driver'
-chrome_driver_path = './.Driver/chromedriver'
+chrome_driver_path = '/Users/srikar/anaconda3/lib/python3.11/site-packages/chromedriver_binary'
 
-if not os.path.exists(chrome_driver_path):
-    default_chrom_driver_path = ChromeDriverManager().install()
-    os.mkdir(chrome_driver_dir)
-    shutil.move(default_chrom_driver_path, chrome_driver_path)
+# if not os.path.exists(chrome_driver_path):
+#     default_chrom_driver_path = ChromeDriverManager().install()
+#     os.mkdir(chrome_driver_dir)
+#     shutil.move(default_chrom_driver_path, chrome_driver_path)
 
-service = Service(chrome_driver_path)
+# service = Service(chrome_driver_path)
 
 chrome_options = Options()
 chrome_options.add_argument('user-agent=genie-user')
 chrome_options.add_argument("--headless")
 
 def get_page_content(url):
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
     driver.get(url)
     page_content = driver.page_source
     driver.quit()
