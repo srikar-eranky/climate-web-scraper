@@ -1,8 +1,7 @@
-import pandas as pd
-from ams_base_node import AmsBaseNode
+from base_nav_node import BaseNavNode
 from ams.ams_journal_node import AmsJournalNode
 
-class AmsNode(AmsBaseNode):
+class AmsNode(BaseNavNode):
     def __init__(self, name):
         super().__init__(name)
         self.pd_column = 'Website'
@@ -21,9 +20,8 @@ class AmsNode(AmsBaseNode):
         for journal, link in journal_links:
             print("Navigating into journal - " + journal)
             url = link + "?contents=latest-issue"
-            child = AmsJournalNode(name=journal, url=url, base_url=self.base_url, parent=self)
+            child = AmsJournalNode(name=journal, url=url, base_url=self.base_url)
             self.children.append(child)
             child.expand_node()
-            break
             
 
