@@ -13,10 +13,22 @@ class AmsIssueNode(BaseNavNode):
         try:
             page_contents = get_page_content(self.url)
             page_contents = page_contents.strip()
-            page_contents = page_contents[page_contents.find("ARTICLES"):]
-            label_index = page_contents.find("<div class=\"label\">")
+            
+            # get links from "Articles" section
+            article_contents = page_contents[page_contents.find("ARTICLES"):]
+            label_index = article_contents.find("<div class=\"label\">")
             if label_index != -1:
-                page_contents = page_contents[:label_index]
+                article_contents = article_contents[:label_index]
+            
+            # get links from "Explaining Extreme Events Section"
+            explaining_contents = page_contents[page_contents.find("EXPLAINING EXTREME EVENTS FROM A CLIMATE PERSPECTIVE"):]
+            label_index = explaining_contents.find("<div class=\"label\">")
+            if label_index != -1:
+                explaining_contents = explaining_contents[:label_index]
+
+            page_contents = article_contents + '\n' + explaining_contents
+
+            # find all occurences of pattern in each section
             pattern = r'<a target="_self" href="([^"]*)" class="c-Button--link">([^<]*)</a>'
             occurrences = re.findall(pattern,page_contents)
             for href, text in occurrences:

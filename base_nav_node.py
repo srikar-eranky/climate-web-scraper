@@ -20,7 +20,7 @@ class BaseNavNode:
                 child.display_nav_tree(tabs + '\t')
     
     def to_pandas(self):
-        if self.children is None:
+        if self.children is None or len(self.children) == 0:
             return pd.DataFrame({'Title': [self.name], 'PDF Link': [self.url]})
         else:
             df_list = []
