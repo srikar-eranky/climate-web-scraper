@@ -15,7 +15,12 @@ class AmsIssueNode(BaseNavNode):
             page_contents = page_contents.strip()
             
             # get links from "Articles" section
-            article_contents = page_contents[page_contents.find("ARTICLES"):]
+            idx = page_contents.find("ARTICLES")
+            
+            if(idx == -1):
+                idx = page_contents.find("ARTICLE")
+
+            article_contents = page_contents[idx:]
             label_index = article_contents.find("<div class=\"label\">")
             if label_index != -1:
                 article_contents = article_contents[:label_index]
